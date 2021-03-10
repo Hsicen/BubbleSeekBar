@@ -13,10 +13,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
@@ -216,6 +214,7 @@ public class BubbleSeekBar extends View {
 
         // init BubbleView
         mBubbleView = new BubbleView(context);
+        mBubbleView.setBackgroundResource(R.drawable.icon_bubble);
         mBubbleView.setProgressText(isShowProgressInFloat ?
             String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
 
@@ -484,10 +483,10 @@ public class BubbleSeekBar extends View {
             mBubbleCenterRawSolidX = mPoint[0] + mLeft - mBubbleView.getMeasuredWidth() / 2f;
         }
         mBubbleCenterRawX = calculateCenterRawXofBubbleView();
-        mBubbleCenterRawSolidY = mPoint[1] - mBubbleView.getMeasuredHeight();
-        mBubbleCenterRawSolidY -= dp2px(29);
+        mBubbleCenterRawSolidY = mPoint[1] - mBubbleView.getMeasuredHeight() - mThumbRadius * 2;
+        mBubbleCenterRawSolidY -= dp2px(8);
         if (BubbleUtils.isMIUI()) {
-            mBubbleCenterRawSolidY -= dp2px(4);
+            mBubbleCenterRawSolidY -= dp2px(10);
         }
 
         Context context = getContext();
@@ -623,6 +622,8 @@ public class BubbleSeekBar extends View {
         // draw track
         mPaint.setColor(mSecondTrackColor);
         mPaint.setStrokeWidth(mSecondTrackSize);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setShader(mTrackShader);
         if (isRtl) {
             canvas.drawLine(xRight, yTop, mThumbCenterX, yTop, mPaint);
@@ -1431,9 +1432,6 @@ public class BubbleSeekBar extends View {
     private class BubbleView extends View {
 
         private Paint mBubblePaint;
-        private Path mBubblePath;
-        private RectF mBubbleRectF;
-        private Rect mRect;
         private String mProgressText = "";
 
         BubbleView(Context context) {
@@ -1451,53 +1449,21 @@ public class BubbleSeekBar extends View {
             mBubblePaint.setAntiAlias(true);
             mBubblePaint.setTextAlign(Paint.Align.CENTER);
             mBubblePaint.setFakeBoldText(true);
-
-            mBubblePath = new Path();
-            mBubbleRectF = new RectF();
-            mRect = new Rect();
         }
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-            setMeasuredDimension(3 * mBubbleRadius, 3 * mBubbleRadius);
-
-            mBubbleRectF.set(getMeasuredWidth() / 2f - mBubbleRadius, 0,
-                getMeasuredWidth() / 2f + mBubbleRadius, 2 * mBubbleRadius);
+            setMeasuredDimension(dp2px(30), dp2px(36));
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-
-            mBubblePath.reset();
-            float x0 = getMeasuredWidth() / 2f;
-            float y0 = getMeasuredHeight() - mBubbleRadius / 3f;
-            mBubblePath.moveTo(x0, y0);
-            float x1 = (float) (getMeasuredWidth() / 2f - Math.sqrt(3) / 2f * mBubbleRadius);
-            float y1 = 3 / 2f * mBubbleRadius;
-            mBubblePath.quadTo(
-                x1 - dp2px(2), y1 - dp2px(2),
-                x1, y1
-            );
-            mBubblePath.arcTo(mBubbleRectF, 150, 240);
-
-            float x2 = (float) (getMeasuredWidth() / 2f + Math.sqrt(3) / 2f * mBubbleRadius);
-            mBubblePath.quadTo(
-                x2 + dp2px(2), y1 - dp2px(2),
-                x0, y0
-            );
-            mBubblePath.close();
-
-            mBubblePaint.setColor(mBubbleColor);
-            canvas.drawPath(mBubblePath, mBubblePaint);
-
             mBubblePaint.setTextSize(mBubbleTextSize);
             mBubblePaint.setColor(mBubbleTextColor);
-            mBubblePaint.getTextBounds(mProgressText, 0, mProgressText.length(), mRect);
-            Paint.FontMetrics fm = mBubblePaint.getFontMetrics();
-            float baseline = mBubbleRadius + (fm.descent - fm.ascent) / 2f - fm.descent;
+            float baseline = dp2px(21);
             canvas.drawText(mProgressText, getMeasuredWidth() / 2f, baseline, mBubblePaint);
         }
 
