@@ -470,7 +470,7 @@ public class BubbleSeekBar extends View {
      * 然后根据进度来增量计算横坐标mBubbleCenterRawX，再动态设置LayoutParameter.x，就实现了气泡跟随滑动移动。
      */
     private void locatePositionInWindow() {
-        getLocationInWindow(mPoint);
+        getLocationOnScreen(mPoint);
 
         ViewParent parent = getParent();
         if (parent instanceof View && ((View) parent).getMeasuredWidth() > 0) {
