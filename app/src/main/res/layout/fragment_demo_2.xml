@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="show section text (sides, by default), show thumb text"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
 
     <com.xw.repo.BubbleSeekBar
         android:layout_width="match_parent"
@@ -19,38 +19,32 @@
         android:layout_marginTop="8dp"
         app:bsb_show_section_mark="true"
         app:bsb_show_section_text="true"
-        app:bsb_show_thumb_text="true"/>
+        app:bsb_show_thumb_text="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="section text position : bottom_sides, show progress in float"/>
+        android:text="section text position : bottom_sides, show progress in float" />
 
     <com.xw.repo.BubbleSeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:bsb_bubble_color="@color/color_red_light"
-        app:bsb_bubble_text_color="@color/colorPrimaryDark"
-        app:bsb_max="50.0"
-        app:bsb_min="-50"
-        app:bsb_progress="0"
+        app:bsb_bubble_color="#FFFFFF"
+        app:bsb_bubble_text_color="#1A1A1A"
+        app:bsb_bubble_text_size="14sp"
+        app:bsb_max="5.0"
         app:bsb_second_track_color="@color/color_red"
-        app:bsb_section_count="5"
-        app:bsb_section_text_position="bottom_sides"
         app:bsb_show_progress_in_float="true"
-        app:bsb_show_section_mark="true"
-        app:bsb_show_section_text="true"
-        app:bsb_show_thumb_text="true"
-        app:bsb_track_color="@color/color_red_light"/>
+        app:bsb_track_color="@color/color_red_light" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="section text position: below_section_mark, auto adjust section mark"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
 
     <com.xw.repo.BubbleSeekBar
         android:layout_width="match_parent"
@@ -63,14 +57,14 @@
         app:bsb_show_section_mark="true"
         app:bsb_show_section_text="true"
         app:bsb_show_thumb_text="true"
-        app:bsb_track_color="@color/color_red_light"/>
+        app:bsb_track_color="@color/color_red_light" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="touch to seek, auto adjust"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
 
     <com.xw.repo.BubbleSeekBar
         android:layout_width="match_parent"
@@ -84,14 +78,14 @@
         app:bsb_show_section_text="true"
         app:bsb_show_thumb_text="true"
         app:bsb_thumb_text_size="18sp"
-        app:bsb_touch_to_seek="true"/>
+        app:bsb_touch_to_seek="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="right to left"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
 
     <com.xw.repo.BubbleSeekBar
         android:layout_width="match_parent"
@@ -106,5 +100,5 @@
         app:bsb_show_section_mark="true"
         app:bsb_show_section_text="true"
         app:bsb_show_thumb_text="true"
-        app:bsb_touch_to_seek="true"/>
+        app:bsb_touch_to_seek="true" />
 </LinearLayout>

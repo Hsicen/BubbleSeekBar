@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:bsb_progress="50"
+        app:bsb_progress="5.0"
         app:bsb_second_track_color="@color/color_green"
         app:bsb_show_section_mark="true"
         app:bsb_track_color="@color/color_gray"/>

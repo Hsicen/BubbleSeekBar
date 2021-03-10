@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#131213"
+    android:splitMotionEvents="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/shape_music_fade">
+
+        <TextView
+            android:id="@+id/tvFadeStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="44dp"
+            android:text="淡入时长"
+            android:textColor="#E4E1E9"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp" />
+
+        <TextView
+            android:id="@+id/tvFadeEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="46dp"
+            android:layout_marginBottom="16dp"
+            android:text="淡出时长"
+            android:textColor="#E4E1E9"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@id/fadeMenu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFadeStart"
+            tools:ignore="SmallSp" />
+
+        <com.xw.repo.BubbleSeekBar
+            android:id="@+id/bsbFadeStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            android:paddingTop="3dp"
+            app:bsb_bubble_color="#FFFFFF"
+            app:bsb_bubble_text_color="#1A1A1A"
+            app:bsb_bubble_text_size="12sp"
+            app:bsb_max="5.0"
+            app:bsb_show_progress_in_float="true"
+            app:bsb_thumb_color="#FFFFFF"
+            app:bsb_thumb_radius="10dp"
+            app:bsb_thumb_radius_on_dragging="10dp"
+            app:bsb_track_color="#252525"
+            app:bsb_track_size="4dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@id/tvFadeStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvFadeStart"
+            app:layout_constraintTop_toTopOf="@id/tvFadeStart" />
+
+        <com.xw.repo.BubbleSeekBar
+            android:id="@+id/bsbFadeEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            android:paddingTop="3dp"
+            app:bsb_bubble_color="#FFFFFF"
+            app:bsb_bubble_text_color="#1A1A1A"
+            app:bsb_bubble_text_size="12sp"
+            app:bsb_max="5.0"
+            app:bsb_show_progress_in_float="true"
+            app:bsb_thumb_color="#FFFFFF"
+            app:bsb_thumb_radius="10dp"
+            app:bsb_thumb_radius_on_dragging="10dp"
+            app:bsb_track_color="#252525"
+            app:bsb_track_size="4dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@id/tvFadeEnd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvFadeEnd"
+            app:layout_constraintTop_toTopOf="@id/tvFadeEnd" />
+
+        <View
+            android:id="@+id/fadeMenu"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFadeEnd" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
