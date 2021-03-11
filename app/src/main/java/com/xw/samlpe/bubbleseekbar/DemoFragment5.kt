@@ -1,46 +1,42 @@
-package com.xw.samlpe.bubbleseekbar;
+package com.xw.samlpe.bubbleseekbar
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.xw.repo.BubbleSeekBar;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.xw.repo.BubbleSeekBar
 
 /**
  * DemoFragment2
- * <p>
+ *
+ *
  * Created by woxingxiao on 2017-03-11.
  */
+class DemoFragment5 : Fragment() {
+    private var fadeStart: BubbleSeekBar? = null
+    private var fadeEnd: BubbleSeekBar? = null
 
-public class DemoFragment5 extends Fragment {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = inflater.inflate(R.layout.fragment_demo_5, container, false)
+        fadeStart = rootView.findViewById(R.id.bsbFadeStart)
+        fadeEnd = rootView.findViewById(R.id.bsbFadeEnd)
 
-    private BubbleSeekBar fadeStart;
-    private BubbleSeekBar fadeEnd;
+        rootView.findViewById<View>(R.id.fadeMenu).setOnClickListener {
 
-    public static DemoFragment5 newInstance() {
-        return new DemoFragment5();
+        }
+        return rootView
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_demo_5, container, false);
-        fadeStart = rootView.findViewById(R.id.bsbFadeStart);
-        fadeEnd = rootView.findViewById(R.id.bsbFadeEnd);
+    override fun onResume() {
+        super.onResume()
 
-        return rootView;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        /*fadeStart.enableSecondShader();
-        fadeEnd.enableSecondShader();*/
+    companion object {
+        @JvmStatic
+        fun newInstance(): DemoFragment5 {
+            return DemoFragment5()
+        }
     }
 }

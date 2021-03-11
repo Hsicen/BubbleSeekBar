@@ -2,4 +2,8 @@
     <string name="app_name">BubbleSeekBar</string>
     <string name="action_settings">Settings</string>
     <string name="set_random_progress">set random progress</string>
+
+    <string name="music_fade_start">淡入时长</string>
+    <string name="music_fade_end">淡出时长</string>
+    <string name="fade_music">淡化</string>
 </resources>

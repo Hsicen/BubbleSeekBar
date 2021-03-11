@@ -1455,7 +1455,7 @@ public class BubbleSeekBar extends View {
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-            setMeasuredDimension(dp2px(30), dp2px(36));
+            setMeasuredDimension(dp2px(29), dp2px(37));
         }
 
         @Override

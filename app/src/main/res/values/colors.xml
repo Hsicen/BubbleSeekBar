@@ -9,4 +9,12 @@
     <color name="color_red_light">#FFB4B6</color>
     <color name="color_blue">#03A9F4</color>
     <color name="color_gray_light">#F5F5F5</color>
+
+    <color name="music_fade_track">#252525</color>
+    <color name="music_music_item_btn_use">#1A1A1A</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#616770</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="editor_scene_label">#E4E1E9</color>
 </resources>

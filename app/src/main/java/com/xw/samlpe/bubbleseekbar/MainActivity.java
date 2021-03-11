@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_tab_btn_1:
-                switchContent("demo1");
+                new MusicFadeDialog()
+                    .show(getSupportFragmentManager());
                 break;
             case R.id.main_tab_btn_2:
                 switchContent("demo2");
