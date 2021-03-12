@@ -8,12 +8,12 @@
 **A beautiful Android custom seek bar, which has a bubble view with progress appearing upon when seeking. Highly customizable, mostly demands has been considered. `star` or `pull request` will be welcomed**
 ****
 ## Screenshot
-![demo5](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo5.gif)
-![demo1](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo1.gif)
-![demo2](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo2.gif)
+![demo5](./screenshot/demo5.gif)
+![demo1](./screenshot/demo1.gif)
+![demo2](./screenshot/demo2.gif)
 ******
-![demo3](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo3.gif)
-![demo4](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo4.gif)
+![demo3](./screenshot/demo3.gif)
+![demo4](./screenshot/demo4.gif)
 
 ## Download
 The **LATEST_VERSION**: [![Download](https://api.bintray.com/packages/woxingxiao/maven/bubbleseekbar/images/download.svg)](https://bintray.com/woxingxiao/maven/bubbleseekbar/_latestVersion)
