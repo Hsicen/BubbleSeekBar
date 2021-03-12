@@ -13,8 +13,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
@@ -137,6 +139,9 @@ public class BubbleSeekBar extends View {
     private int mBubbleTextBaseline;
     private int mBubbleWidth;
     private int mBubbleHeight;
+    private String mBubbleTextUnit;
+    private boolean mBubbleUser;
+    private int mBubbleMargin;
 
     public BubbleSeekBar(Context context) {
         this(context, null);
@@ -207,6 +212,9 @@ public class BubbleSeekBar extends View {
         mBubbleWidth = a.getDimensionPixelSize(R.styleable.BubbleSeekBar_bsb_bubble_width, dp2px(29));
         mBubbleHeight = a.getDimensionPixelSize(R.styleable.BubbleSeekBar_bsb_bubble_height, dp2px(37));
         mBubbleTextBaseline = a.getDimensionPixelSize(R.styleable.BubbleSeekBar_bsb_bubble_text_baseline, mBubbleHeight / 2);
+        mBubbleTextUnit = a.getString(R.styleable.BubbleSeekBar_bsb_bubble_text_unit);
+        mBubbleUser = a.getBoolean(R.styleable.BubbleSeekBar_bsb_bubble_user, false);
+        mBubbleMargin = a.getDimensionPixelSize(R.styleable.BubbleSeekBar_bsb_bubble_margin, dp2px(8));
         setEnabled(a.getBoolean(R.styleable.BubbleSeekBar_android_enabled, isEnabled()));
         a.recycle();
 
@@ -217,6 +225,9 @@ public class BubbleSeekBar extends View {
 
         mRectText = new Rect();
         mTextSpace = dp2px(2);
+        if (null == mBubbleTextUnit) {
+            mBubbleTextUnit = "";
+        }
 
         initConfigByPriority();
 
@@ -227,7 +238,7 @@ public class BubbleSeekBar extends View {
 
         // init BubbleView
         mBubbleView = new BubbleView(context);
-        mBubbleView.setBackgroundResource(mBubbleRes);
+        if (mBubbleUser) mBubbleView.setBackgroundResource(mBubbleRes);
         mBubbleView.setProgressText(isShowProgressInFloat ?
             String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
 
@@ -496,7 +507,7 @@ public class BubbleSeekBar extends View {
         }
         mBubbleCenterRawX = calculateCenterRawXofBubbleView();
         mBubbleCenterRawSolidY = mPoint[1] - mBubbleView.getMeasuredHeight() - mThumbRadius * 2;
-        mBubbleCenterRawSolidY -= dp2px(8);
+        mBubbleCenterRawSolidY -= mBubbleMargin;
         if (BubbleUtils.isMIUI()) {
             mBubbleCenterRawSolidY -= dp2px(10);
         }
@@ -1436,6 +1447,9 @@ public class BubbleSeekBar extends View {
     private class BubbleView extends View {
 
         private Paint mBubblePaint;
+        private Path mBubblePath;
+        private RectF mBubbleRectF;
+        private Rect mRect;
         private String mProgressText = "";
 
         BubbleView(Context context) {
@@ -1453,27 +1467,69 @@ public class BubbleSeekBar extends View {
             mBubblePaint.setAntiAlias(true);
             mBubblePaint.setTextAlign(Paint.Align.CENTER);
             mBubblePaint.setFakeBoldText(true);
+
+            mBubblePath = new Path();
+            mBubbleRectF = new RectF();
+            mRect = new Rect();
         }
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-            setMeasuredDimension(mBubbleWidth, mBubbleHeight);
+            if (mBubbleUser) {
+                setMeasuredDimension(mBubbleWidth, mBubbleHeight);
+            } else {
+                setMeasuredDimension(3 * mBubbleRadius, 3 * mBubbleRadius);
+                mBubbleRectF.set(getMeasuredWidth() / 2f - mBubbleRadius, 0,
+                    getMeasuredWidth() / 2f + mBubbleRadius, 2 * mBubbleRadius);
+            }
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            mBubblePaint.setTextSize(mBubbleTextSize);
-            mBubblePaint.setColor(mBubbleTextColor);
-            float baseline = mBubbleTextBaseline;
-            canvas.drawText(mProgressText, getMeasuredWidth() / 2f, baseline, mBubblePaint);
+
+            if (mBubbleUser) {
+                mBubblePaint.setTextSize(mBubbleTextSize);
+                mBubblePaint.setColor(mBubbleTextColor);
+                float baseline = mBubbleTextBaseline;
+                canvas.drawText(mProgressText, getMeasuredWidth() / 2f, baseline, mBubblePaint);
+            } else {
+                mBubblePath.reset();
+                float x0 = getMeasuredWidth() / 2f;
+                float y0 = getMeasuredHeight() - mBubbleRadius / 3f;
+                mBubblePath.moveTo(x0, y0);
+                float x1 = (float) (getMeasuredWidth() / 2f - Math.sqrt(3) / 2f * mBubbleRadius);
+                float y1 = 3 / 2f * mBubbleRadius;
+                mBubblePath.quadTo(
+                    x1 - dp2px(2), y1 - dp2px(2),
+                    x1, y1
+                );
+                mBubblePath.arcTo(mBubbleRectF, 150, 240);
+
+                float x2 = (float) (getMeasuredWidth() / 2f + Math.sqrt(3) / 2f * mBubbleRadius);
+                mBubblePath.quadTo(
+                    x2 + dp2px(2), y1 - dp2px(2),
+                    x0, y0
+                );
+                mBubblePath.close();
+
+                mBubblePaint.setColor(mBubbleColor);
+                canvas.drawPath(mBubblePath, mBubblePaint);
+
+                mBubblePaint.setTextSize(mBubbleTextSize);
+                mBubblePaint.setColor(mBubbleTextColor);
+                mBubblePaint.getTextBounds(mProgressText, 0, mProgressText.length(), mRect);
+                Paint.FontMetrics fm = mBubblePaint.getFontMetrics();
+                float baseline = mBubbleRadius + (fm.descent - fm.ascent) / 2f - fm.descent;
+                canvas.drawText(mProgressText, getMeasuredWidth() / 2f, baseline, mBubblePaint);
+            }
         }
 
         void setProgressText(String progressText) {
             if (null == progressText) return;
-            progressText = progressText + "s";
+            progressText = progressText + mBubbleTextUnit;
 
             if (!mProgressText.equals(progressText)) {
                 mProgressText = progressText;

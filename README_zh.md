@@ -6,6 +6,7 @@
 **自定义`SeekBar`，进度变化由可视化气泡样式呈现，定制化程度较高，适合大部分需求。欢迎`star` or `pull request`**  
 ****
 ## Screenshot
+![demo5](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo5.gif)
 ![demo1](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo1.gif)
 ![demo2](https://github.com/woxingxiao/BubbleSeekBar/blob/master/screenshot/demo2.gif)
 *******
