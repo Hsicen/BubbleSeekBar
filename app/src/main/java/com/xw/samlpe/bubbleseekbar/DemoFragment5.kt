@@ -28,11 +28,6 @@ class DemoFragment5 : Fragment() {
         return rootView
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     companion object {
         @JvmStatic
         fun newInstance(): DemoFragment5 {

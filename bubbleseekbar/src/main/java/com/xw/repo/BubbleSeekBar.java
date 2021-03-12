@@ -130,7 +130,13 @@ public class BubbleSeekBar extends View {
     private float mPreSecValue; // previous SectionValue
     private BubbleConfigBuilder mConfigBuilder; // config attributes
     private LinearGradient mTrackShader;
-    private int lastWidth = 0;
+
+    private int mTrackStartColor;
+    private int mTrackEndColor;
+    private int mBubbleRes;
+    private int mBubbleTextBaseline;
+    private int mBubbleWidth;
+    private int mBubbleHeight;
 
     public BubbleSeekBar(Context context) {
         this(context, null);
@@ -194,6 +200,13 @@ public class BubbleSeekBar extends View {
         mAlwaysShowBubbleDelay = Math.max(duration, 0);
         isHideBubble = a.getBoolean(R.styleable.BubbleSeekBar_bsb_hide_bubble, false);
         isRtl = a.getBoolean(R.styleable.BubbleSeekBar_bsb_rtl, false);
+
+        mBubbleRes = a.getResourceId(R.styleable.BubbleSeekBar_bsb_bubble_res, R.drawable.icon_bubble);
+        mTrackStartColor = a.getColor(R.styleable.BubbleSeekBar_bsb_track_start_color, mSecondTrackColor);
+        mTrackEndColor = a.getColor(R.styleable.BubbleSeekBar_bsb_track_end_color, mSecondTrackColor);
+        mBubbleWidth = a.getDimensionPixelSize(R.styleable.BubbleSeekBar_bsb_bubble_width, dp2px(29));
+        mBubbleHeight = a.getDimensionPixelSize(R.styleable.BubbleSeekBar_bsb_bubble_height, dp2px(37));
+        mBubbleTextBaseline = a.getDimensionPixelSize(R.styleable.BubbleSeekBar_bsb_bubble_text_baseline, mBubbleHeight / 2);
         setEnabled(a.getBoolean(R.styleable.BubbleSeekBar_android_enabled, isEnabled()));
         a.recycle();
 
@@ -214,7 +227,7 @@ public class BubbleSeekBar extends View {
 
         // init BubbleView
         mBubbleView = new BubbleView(context);
-        mBubbleView.setBackgroundResource(R.drawable.icon_bubble);
+        mBubbleView.setBackgroundResource(mBubbleRes);
         mBubbleView.setProgressText(isShowProgressInFloat ?
             String.valueOf(getProgressFloat()) : String.valueOf(getProgress()));
 
@@ -437,7 +450,6 @@ public class BubbleSeekBar extends View {
 
         mTrackLength = mRight - mLeft;
         mSectionOffset = mTrackLength * 1f / mSectionCount;
-        enableSecondShader(getMeasuredWidth());
 
         if (!isHideBubble) {
             mBubbleView.measure(widthMeasureSpec, heightMeasureSpec);
@@ -649,6 +661,9 @@ public class BubbleSeekBar extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+
+        int[] gradientColor = {mTrackStartColor, mTrackEndColor};
+        mTrackShader = new LinearGradient(0, 0, getMeasuredWidth(), 0, gradientColor, null, Shader.TileMode.CLAMP);
 
         post(new Runnable() {
             @Override
@@ -1202,17 +1217,6 @@ public class BubbleSeekBar extends View {
         }
     }
 
-    private void enableSecondShader(int showWidth) {
-        if (showWidth == 0) return;
-        if (showWidth == lastWidth) return;
-
-        int color0 = Color.parseColor("#694F8E");
-        int color1 = Color.parseColor("#CDABFF");
-        int[] gradientColor = {color1, color0};
-        mTrackShader = new LinearGradient(0, 0, showWidth, 0, gradientColor, null, Shader.TileMode.CLAMP);
-        lastWidth = showWidth;
-    }
-
     public void setThumbColor(@ColorInt int thumbColor) {
         if (mThumbColor != thumbColor) {
             mThumbColor = thumbColor;
@@ -1455,7 +1459,7 @@ public class BubbleSeekBar extends View {
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-            setMeasuredDimension(dp2px(29), dp2px(37));
+            setMeasuredDimension(mBubbleWidth, mBubbleHeight);
         }
 
         @Override
@@ -1463,7 +1467,7 @@ public class BubbleSeekBar extends View {
             super.onDraw(canvas);
             mBubblePaint.setTextSize(mBubbleTextSize);
             mBubblePaint.setColor(mBubbleTextColor);
-            float baseline = dp2px(21);
+            float baseline = mBubbleTextBaseline;
             canvas.drawText(mProgressText, getMeasuredWidth() / 2f, baseline, mBubblePaint);
         }
 
